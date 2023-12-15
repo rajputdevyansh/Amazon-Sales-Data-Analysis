@@ -1,0 +1,15 @@
+[Category.1]&" "&[Category.2]&" "&[Category.3]
+
+Sale_Option = DATATABLE("Name", STRING, "Type", STRING,{{"1","Sales"},{"2","Units"}})
+
+Sales_Amount=SUM(Report[Total_Amount])
+
+SalesOn = var _select_Img=SELECTEDVALUE(Sale_Option[Type]) var img="https://drive.google.com/uc?export=view&id=1UM3PKN2xVg8J9h9dk708QaqPoEXRdo1q" return if(_select_Img="1",img)
+
+UnitsOn = var _select_Img=SELECTEDVALUE(Sale_Option[Type]) var img="https://drive.google.com/uc?export=view&id=1UM3PKN2xVg8J9h9dk708QaqPoEXRdo1q" return if(_select_Img="2",img)
+
+Overall_sales=CALCULATE([Filter_sales],ALL(Products[Category]))
+
+Filter_sales = Var _select=SELECTEDVALUE(Sale_Option[Type]) return IF(_select="1",[Sales_Amount],[Sales_Units])
+
+Seller_count = var val= CALCULATE(COUNT('Products'[Saller ID]),CONTAINSSTRING('Report'[Status],"Delivered")) return IF(val=BLANK(),"0",val)
